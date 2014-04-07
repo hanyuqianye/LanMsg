@@ -15,7 +15,7 @@ public interface MsgPacket {
 	/**
 	 * magic length id cmd data
 	 */
-	final int DEFAULT_MSG_HEADER_LENGTH = (2 + 2 + 2) + 4 + 8 + 4 + 4;
+	final int DEFAULT_MSG_HEADER_LENGTH = (2 + 2) + 4 + 8 + 4 + 4;
 	/**
      *
      */
