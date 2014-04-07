@@ -24,6 +24,7 @@ public class MsgReceiver extends MsgEventListener implements Runnable {
 
 	private Thread thread = null;
 
+	//Poison pill
 	/**
 	 * @param socket
 	 *            DatagramSocket
@@ -82,7 +83,7 @@ public class MsgReceiver extends MsgEventListener implements Runnable {
 				{
 					parsMsg(packet);
 				}
-				else if (bytes[0] == "stop".getBytes()[0]) {
+				else if (Arrays.equals(magic,new byte[]{'s', 't', 'o', 'p'})) {
 					System.out.println(new String(bytes));
 					break;
 				}
