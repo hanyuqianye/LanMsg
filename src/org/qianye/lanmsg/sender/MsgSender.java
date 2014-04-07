@@ -1,13 +1,13 @@
 package org.qianye.lanmsg.sender;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+
 import org.qianye.lanmsg.event.MsgEvent;
 import org.qianye.lanmsg.event.MsgEventListener;
 import org.qianye.lanmsg.msg.MsgAddress;
 import org.qianye.lanmsg.msg.MsgPacket;
-
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 
 /**
  * MsgSender

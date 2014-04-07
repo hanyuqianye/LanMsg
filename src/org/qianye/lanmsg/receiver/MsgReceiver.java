@@ -54,7 +54,7 @@ public class MsgReceiver extends MsgEventListener implements Runnable {
 		}
 	}
 	/**
-	 * 唤醒阻塞的IO
+	 * 通过"毒丸"唤醒阻塞的IO
 	 */
 	private void wakeup() {
 		byte[] mess = new byte[]{'s', 't', 'o', 'p'};

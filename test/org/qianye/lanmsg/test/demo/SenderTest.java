@@ -22,6 +22,7 @@ import org.qianye.lanmsg.sender.MsgSender;
 public class SenderTest {
 
     private final Hashtable<Long, MsgSender> senders = new Hashtable<>();
+    
     private DatagramSocket socket;
 
     public SenderTest() {

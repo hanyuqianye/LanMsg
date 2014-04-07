@@ -1,11 +1,11 @@
 package org.qianye.lanmsg.factory;
 
-import org.qianye.lanmsg.msg.MsgAddress;
-import org.qianye.lanmsg.msg.MsgPacket;
-
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+
+import org.qianye.lanmsg.msg.MsgAddress;
+import org.qianye.lanmsg.msg.MsgPacket;
 
 /**
  * @author Administrator

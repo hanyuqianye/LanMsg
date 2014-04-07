@@ -1,7 +1,5 @@
 package org.qianye.lanmsg.event.test;
 
-import org.qianye.lanmsg.event.EventHandler;
-import org.qianye.lanmsg.event.EventObject;
 import org.qianye.lanmsg.event.MsgEventListener;
 
 public class MsgEventListenerTest {
