@@ -61,6 +61,9 @@ public class MsgReceiverBAK extends MsgEventListener implements Runnable {
 	 * 唤醒阻塞的IO
 	 */
 	private void wakeup() {
+		if(socket.isClosed()){
+			throw new IllegalStateException("socket is closed!");
+		}
 		byte[] mess = "stop".getBytes();
 		try {
 			InetSocketAddress add = new InetSocketAddress(InetAddress.getLocalHost(), socket.getLocalPort());

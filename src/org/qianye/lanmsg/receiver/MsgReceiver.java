@@ -24,7 +24,6 @@ public class MsgReceiver extends MsgEventListener implements Runnable {
 
 	private Thread thread = null;
 
-	//Poison pill
 	/**
 	 * @param socket
 	 *            DatagramSocket
@@ -36,7 +35,6 @@ public class MsgReceiver extends MsgEventListener implements Runnable {
 	/**
 	 * 
 	 */
-
 	public synchronized void start() {
 		if (thread == null) {
 			thread = new Thread(this);
@@ -58,13 +56,14 @@ public class MsgReceiver extends MsgEventListener implements Runnable {
 	 * 通过"毒丸"唤醒阻塞的IO
 	 */
 	private void wakeup() {
+		if(socket.isClosed()) throw new  IllegalStateException("socket is closed");
 		byte[] mess = new byte[]{'s', 't', 'o', 'p'};
 		try {
 			InetSocketAddress localAddrees = new InetSocketAddress(InetAddress.getLocalHost(), socket.getLocalPort());
 			DatagramPacket packet = new DatagramPacket(mess, mess.length, localAddrees);
 			socket.send(packet);
 		} catch (IOException ie) {
-			throw new RuntimeException(" thread" + thread.getName() + ":" + ie);
+			throw new RuntimeException("wakeup Exception: thread" + thread.getName() + ":" + ie);
 		}
 	}
 
@@ -73,26 +72,27 @@ public class MsgReceiver extends MsgEventListener implements Runnable {
 		final byte[] buffer = new byte[MsgPacket.MAX_BUF];
 		final DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 		while (true) {
+			if(socket.isClosed()) throw new  IllegalStateException("socket is closed");
 			try {
 				socket.receive(packet);
-				byte[] bytes = packet.getData();
-				byte[] magic=new byte[MsgPacket.MSG_MAGIC_LENGTH];
-				System.arraycopy(bytes,0, magic, 0, 4);
-                /* check magic */
-				if(Arrays.equals(magic,MsgPacket.MSG_CMD_MAGIC))
-				{
-					parsMsg(packet);
-				}
-				else if (Arrays.equals(magic,new byte[]{'s', 't', 'o', 'p'})) {
-					System.out.println(new String(bytes));
-					break;
-				}
 			} catch (IOException ie) {
-				throw new RuntimeException(ie);
+				ie.printStackTrace();
+				continue;
+			}
+			
+			byte[] bytes = packet.getData();
+			byte[] magic=new byte[MsgPacket.MSG_MAGIC_LENGTH];
+			System.arraycopy(bytes,0, magic, 0, 4);
+            /* check magic */
+			if(Arrays.equals(magic,MsgPacket.MSG_CMD_MAGIC))
+			{
+				parsMsg(packet);
+			}
+			else if (Arrays.equals(magic,new byte[]{'s', 't', 'o', 'p'})) {
+				System.out.println("receive thread  exit!");
+				break;
 			}
 		}
-
-		System.out.println("--------------------------thread exit ok------------------------------------!");
 	}
 
 	/**

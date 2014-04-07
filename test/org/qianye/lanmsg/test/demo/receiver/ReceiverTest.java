@@ -4,7 +4,7 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import org.qianye.lanmsg.receiver.MsgReceiverBAK;
+import org.qianye.lanmsg.receiver.MsgReceiver;
 
 public class ReceiverTest {
 	public static void main(String[] args) throws SocketException,
@@ -12,7 +12,7 @@ public class ReceiverTest {
 
 		DatagramSocket socket = new DatagramSocket(1234);
 
-		MsgReceiverBAK receive = new MsgReceiverBAK(socket);
+		MsgReceiver  receive = new MsgReceiver (socket);
 		receive.stop();
 		//
 
@@ -31,7 +31,9 @@ public class ReceiverTest {
 				}
 			}
 		}.start();
-
+		
+		
+		
 		new Thread("test thread_" + 2) {
 			public void run() {
 				int i = 0;
@@ -67,6 +69,8 @@ public class ReceiverTest {
 					i++;
 				}
 			}
-		}.start();;
+		}.start();
+		
+		//socket.close();
 	}
 }

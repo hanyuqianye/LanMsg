@@ -14,7 +14,7 @@ public class ReceiverTestOne {
 
 		MsgReceiver receive = new MsgReceiver(socket);
 		receive.stop();
-		for (int i = 0; i < 50000; i++) {
+		for (int i = 0; i < 5000; i++) {
 			new Thread() {
 				public void run() {
 					receive.start();
